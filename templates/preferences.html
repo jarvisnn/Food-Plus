@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block css-files %}
+  <link rel="stylesheet" href="{% static "css/preferences.css" %}"/>
+{% endblock %}
+
+{% block content %}
+<!-- FORM -->
+<div id="outer-box" style="display:none;">
+<div id="preference-box" class="ui existing segment container grid">
+  <div class="two wide column"></div>
+  <form id="form-preference" class="ui form twelve wide column"> {% csrf_token %}
+
+    <h4 class="ui dividing header">Hello! Please choose your preferences below :)</h4>
+
+    <!-- Cuisine -->
+    <div class="inline fields">
+      <label class="four wide field">Choose The Cuisine</label>
+      <select class="ui search dropdown" name="cuisine">
+        <option value="">Select Cuisine</option>
+        <option value="chinese">Chinese Cuisine</option>
+        <option value="indian">Indian Cuisine</option>
+        <option value="japanese">Japanese Cuisine</option>
+        <option value="korean">Korean Cuisine</option>
+        <option value="thailand">Thailand Cuisine</option>
+        <option value="malay">Malaysian Cuisine</option>
+        <option value="vietnamese">Vietnamese Cuisine</option>
+        <option value="western">Western Cuisine</option>
+        <option value="?">Anything</option>
+      </select>
+    </div>
+
+    <!-- is-vegetarian -->
+    <div class="inline fields">
+      <label class="four wide field">Do you want vegetarian food?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="is-vegetarian" tabindex="0" value="TRUE" class="hidden">
+          <label>Yes</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="is-vegetarian" tabindex="0" value="FALSE" class="hidden">
+          <label>No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spicy -->
+    <div class="inline fields">
+      <label class="four wide field">Would you like some spicy?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="no spicy" class="hidden">
+          <label>No Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="a bit spicy" class="hidden">
+          <label>A Bit Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="spicy" class="hidden">
+          <label>Normal Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="super spicy" class="hidden">
+          <label>Super Spicy</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salty -->
+    <div class="inline fields">
+      <label class="four wide field">Would you like some salty?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="no salty" class="hidden">
+          <label>No Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="a bit salty" class="hidden">
+          <label>A Bit Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="salty" class="hidden">
+          <label>Normal Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="super salty" class="hidden">
+          <label>Super Salty</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sweet -->
+    <div class="inline fields">
+      <label class="four wide field">Would you like some sweet?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="no sweet" class="hidden">
+          <label>No Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="a bit sweet" class="hidden">
+          <label>A Bit Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="sweet" class="hidden">
+          <label>Normal Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="super sweet" class="hidden">
+          <label>Super Sweet</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sour -->
+    <div class="inline fields">
+      <label class="four wide field">Would you like some sour?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="no sour" class="hidden">
+          <label>No Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="a bit sour" class="hidden">
+          <label>A Bit Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="sour" class="hidden">
+          <label>Normal Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="super sour" class="hidden">
+          <label>Super Sour</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fat -->
+    <div class="inline fields">
+      <label class="four wide field">Any notice about the fat?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="low fat" class="hidden">
+          <label>Low Fat</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="normal fat" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="high fat" class="hidden">
+          <label>High Fat</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fiber -->
+    <div class="inline fields">
+      <label class="four wide field">Any notice about the fiber?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="low fiber" class="hidden">
+          <label>Low Fiber</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="normal fiber" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="high fiber" class="hidden">
+          <label>High Fiber</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calorie -->
+    <div class="inline fields">
+      <label class="four wide field">Any notice about the calorie?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="low calorie" class="hidden">
+          <label>Low Calorie</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="normal calorie" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="high calorie" class="hidden">
+          <label>High Calorie</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Errors -->
+    <div class="ui error message"></div>
+
+    <!-- Submit button -->
+    <div class="inline fields">
+      <div id="submit-button" class="ui submit teal button">Let's GO</div>
+    </div>
+
+  </form>
+</div>
+</div>
+
+
+<!-- CARDS -->
+<div id="dishes-box" class="ui container">
+  <div id="dish-cards" class="ui four stackable link cards">
+  </div>
+</div>
+
+
+<!-- MODAL -->
+<div id="modal-card-detail" class="ui large modal">
+  <i class="close icon"></i>
+
+  <!-- Header -->
+  <div id="modal-header" class="ui content">
+    <div class="ui grid">
+      <div class="ui twelve wide column">
+        <h2 id="detail-name" class="ui header">Name of the dish</h2>
+        <div id="detail-tags">
+          <a class="ui tag label">New</a>
+          <a class="ui tag label">New</a>
+          <a class="ui tag label">New</a>
+        </div>
+      </div>
+      <div class="ui right aligned four wide column">
+        <p id="detail-rating" class="ui header">Rating: </p>
+        <div class="ui right aligned">
+          <i id="header-star-1" class="empty star icon review-star"></i>
+          <i id="header-star-2" class="empty star icon review-star"></i>
+          <i id="header-star-3" class="empty star icon review-star"></i>
+          <i id="header-star-4" class="empty star icon review-star"></i>
+          <i id="header-star-5" class="empty star icon review-star"></i>
+        </div>
+      </div>
+    </div>
+    <div class="ui clearing divider"></div>
+  </div>
+
+  <!-- Main content -->
+  <div id="modal-content" class="ui content">
+    <div class="ui grid">
+
+      <!-- Images -->
+      <div class="eight wide column" id="modal-images">
+        <img class="arrows" id="right-arr" src="/static/images/arrow-right.png">
+        <img class="arrows" id="left-arr" src="/static/images/arrow-left.png">
+
+        <span id="modal-image-tabs">
+          <div class="ui bottom attached tab active" data-tab="first">
+            <img src="/static/images/dishes/17_1_square.jpeg" style="width:100%"/>
+          </div>
+        </spans>
+
+      </div>
+
+      <!-- Right Things -->
+      <div class="eight wide column" id="review-maincontent" >
+        <!-- Description -->
+        <div class="comments">
+          <div class="ui dividing header">Description</div>
+          <p id="detail-description">This is a text.</p>
+        </div>
+
+        <!-- Comments/Reviews -->
+        <div class="ui comments">
+          <h3 class="ui dividing header">Comments&nbsp;&nbsp;&nbsp;&nbsp;<i id="review-new-button" class="edit icon link"></i></h3>
+
+          <form id="review-form" class="ui form" style="display:none">  {% csrf_token %}
+            <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <input type="text" name="review-name" placeholder="Your Name">
+                </div>
+                <div class="field">
+                  <i id="star-1" class="empty star icon link review-star" onclick="clickStar(1)"></i>
+                  <i id="star-2" class="empty star icon link review-star" onclick="clickStar(2)"></i>
+                  <i id="star-3" class="empty star icon link review-star" onclick="clickStar(3)"></i>
+                  <i id="star-4" class="empty star icon link review-star" onclick="clickStar(4)"></i>
+                  <i id="star-5" class="empty star icon link review-star" onclick="clickStar(5)"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comment -->
+            <div class="field">
+              <input type="text" name="review-stars" style="display:none">
+              <textarea id="review-comment" rows="3" placeholder="Your comment here ..."></textarea>
+            </div>
+
+            <!-- Errors -->
+            <div class="ui error message"></div>
+
+            <!-- Submit button -->
+            <div class="inline fields">
+              <div class="ui submit teal button"><i class="icon edit"></i> Submit</div>
+            </div>
+          </form>
+
+          <!-- List of comments -->
+          <span id="comments">
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
+{% block js-files %}
+  <script src="{% static "js/preferences.js" %}"></script>
+  <script>
+    $(window).load(function() {
+      $('.menu .item')
+    .tab();
+    });
+  </script>
+{% endblock %}

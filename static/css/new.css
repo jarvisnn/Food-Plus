@@ -1,0 +1,27 @@
+/* image uploads*/
+.thumb {
+  height: 110px;
+  border: 1px solid grey;
+  margin: 0 5px 0 0;
+  border-radius: 5px;
+  position: relative;
+}
+  .thumb img {
+    height: 100%;
+    border-radius: 5px;
+  }
+  .thumb i {
+    position: absolute;;
+    display: none;
+    top: -14px;
+    left: -14px;
+  }
+  .thumb:hover img{
+    opacity: 0.5;
+  }
+  .thumb:hover i {
+    display: block;
+  }
+
+#preference-box {
+}

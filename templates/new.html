@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block css-files %}
+    <link rel="stylesheet" href="{% static "css/new.css" %}"/>
+{% endblock %}
+
+{% block content %}
+<div id="preference-box" class="ui segment container grid"  style="display:none;">
+  <div class="two wide column"></div>
+  <form id="form-new-dish" class="ui form twelve wide column"> {% csrf_token %}
+
+    <h4 class="ui dividing header">Hello! Thank you so much for helping enrich our system :)</h4>
+
+    <!-- dish name -->
+    <div class="inline fields">
+      <label class="four wide field">What is the name of the dish?</label>
+      <div class="six wide field">
+        <input type="text" name="dish-name" placeholder="Your Dish">
+      </div>
+    </div>
+
+    <!-- Cuisine -->
+    <div class="inline fields">
+      <label class="four wide field">Choose The Cuisine</label>
+      <select class="ui search dropdown" name="cuisine">
+        <option value="">Select Cuisine</option>
+        <option value="chinese">Chinese Cuisine</option>
+        <option value="indian">Indian Cuisine</option>
+        <option value="japanese">Japanese Cuisine</option>
+        <option value="korean">Korean Cuisine</option>
+        <option value="thailand">Thailand Cuisine</option>
+        <option value="malay">Malaysian Cuisine</option>
+        <option value="vietnamese">Vietnamese Cuisine</option>
+        <option value="western">Western Cuisine</option>
+      </select>
+    </div>
+
+    <!-- is-vegetarian -->
+    <div class="inline fields">
+      <label class="four wide field">Is this vegetarian food?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="is-vegetarian" tabindex="0" value="TRUE" class="hidden">
+          <label>Yes</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="is-vegetarian" tabindex="0" value="FALSE" class="hidden">
+          <label>No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spicy -->
+    <div class="inline fields">
+      <label class="four wide field">Is it spicy?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="no spicy" class="hidden">
+          <label>No Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="a bit spicy" class="hidden">
+          <label>A Bit Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="spicy" class="hidden">
+          <label>Normal Spicy</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="spicy-level" tabindex="0" value="super spicy" class="hidden">
+          <label>Super Spicy</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salty -->
+    <div class="inline fields">
+      <label class="four wide field">Is it salty?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="no salty" class="hidden">
+          <label>No Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="a bit salty" class="hidden">
+          <label>A Bit Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="salty" class="hidden">
+          <label>Normal Salty</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="salty-level" tabindex="0" value="super salty" class="hidden">
+          <label>Super Salty</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sweet -->
+    <div class="inline fields">
+      <label class="four wide field">Is it sweet?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="no sweet" class="hidden">
+          <label>No Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="a bit sweet" class="hidden">
+          <label>A Bit Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="sweet" class="hidden">
+          <label>Normal Sweet</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sweet-level" tabindex="0" value="super sweet" class="hidden">
+          <label>Super Sweet</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sour -->
+    <div class="inline fields">
+      <label class="four wide field">Is it sour?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="no sour" class="hidden">
+          <label>No Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="a bit sour" class="hidden">
+          <label>A Bit Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="sour" class="hidden">
+          <label>Normal Sour</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="sour-level" tabindex="0" value="super sour" class="hidden">
+          <label>Super Sour</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fat -->
+    <div class="inline fields">
+      <label class="four wide field">Does it have a lot of fat?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="low fat" class="hidden">
+          <label>Low Fat</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="normal fat" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fat-level" tabindex="0" value="high fat" class="hidden">
+          <label>High Fat</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fiber -->
+    <div class="inline fields">
+      <label class="four wide field">Does it have a lot of fiber?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="low fiber" class="hidden">
+          <label>Low Fiber</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="normal fiber" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="fiber-level" tabindex="0" value="high fiber" class="hidden">
+          <label>High Fiber</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calorie -->
+    <div class="inline fields">
+      <label class="four wide field">Does it have a lot of calorie?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="low calorie" class="hidden">
+          <label>Low Calorie</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="normal calorie" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="calorie-level" tabindex="0" value="high calorie" class="hidden">
+          <label>High Calorie</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="inline fields">
+      <label class="four wide field">Could you give some short description about the dish?</label>
+      <div class="eleven wide field"><textarea rows="3" id="description"></textarea></div>
+    </div>
+
+    <!-- upload image button -->
+    <div class="inline fields">
+      <label class="four wide field">Could you upload some images of the dish?</label>
+      <div class="ui icon big button" id="file-upload">
+        <i class="upload icon"></i>
+      </div>
+      <input type="file" id="hidden-file-upload" style="display: none">
+    </div>
+
+    <!-- output to preview images -->
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div id="list" class="inline fields"></div>
+      <input id="images" type="text" name="images" style="display: none">
+    </div>
+
+    <!-- Errors -->
+    <div class="ui error message"></div>
+
+    <!-- Submit button -->
+    <div class="inline fields">
+      <div id="submit-button" class="ui submit teal button">Submit</div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+
+{% block js-files %}
+  <script src="{% static "js/new.js" %}"></script>
+{% endblock %}

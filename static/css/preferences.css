@@ -1,0 +1,57 @@
+/* Preference form */
+#outer-box {
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+}
+
+
+/* CARDS*/
+#dishes-box {
+  padding-top: 15px;
+}
+.card-star {
+  color: #fbbd08;
+}
+
+
+/* Modal */
+#modal-card-detail {
+  z-index: 100000;
+}
+#modal-header {
+  padding-bottom: 0px !important;
+}
+#modal-content {
+  padding-top: 10px !important;
+}
+#detail-rating {
+  margin-bottom:1px !important;
+}
+
+
+/* Reviews */
+.review-star {
+  font-size: 30px !important;
+  color: #fbbd08;
+}
+#review-maincontent {
+  height: 450px;
+  overflow-y: scroll;
+}
+
+
+/* Arrows */
+.arrows {
+  height: 40px;
+  position: absolute;
+  top: 40%
+}
+
+#right-arr {
+  right: 0px;
+}
+
+#left-arr {
+  left: 0px;
+}

@@ -1,0 +1,83 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jarvis">
+
+  <title>Food Plus</title>
+  <link rel="icon" type="image/png" href="/static/images/logo_pink.png"/>
+
+  <!--  Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+
+  <!-- Semantic Core CSS -->
+  <link rel="stylesheet" href="{% static "css/semantic.min.css" %}"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static "css/common.css" %}"/>
+
+  <!-- Required JS at top -->
+  <script src="{% static "js/jquery2.2.2.min.js" %}"></script>
+  <script src="{% static "js/semantic.min.js" %}"></script>
+
+  {% block css-files %}
+  {% endblock %}
+</head>
+
+<body>
+  {% block nav-bar %}
+    <!--  Default Navigator Bar -->
+    <div class="ui top fixed menu borderless main nav-bar">
+      <div class="ui container">
+        <a href="/"><img class="nav-img" src="/static/images/logo2_pink.png"></a>
+        <div id="the-cat-box">
+          <img id="the-cat" src="/static/images/cat.gif">
+        </div>
+
+        <div class="ui blue message" id="the-message">Blue</div>
+        <div class="right item">
+          <div id="preference-button" class="ui inverted red button nav-button" style="display:none">Preference</div>
+          <a id="preference-link" href="/preferences"><button class="ui inverted red button nav-button">Preference</button></a>
+          <a href="/new"><button class="ui inverted red button nav-button">New Dish</button></a>
+          <a href="/about"><button class="ui inverted red button nav-button">About Us</button></a>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block content %}
+    <!--  Main content -->
+  {% endblock %}
+
+  {% block footer %}
+    <div class="container">
+      <!-- Default Footer -->
+      <ftooter>
+        <!-- <div class="row">
+          <div style="text-align:center">
+            <p>&copy; Designed by Jarvis</p>
+          </div>
+        </div> -->
+      </footer>
+    </div>
+  {% endblock %}
+
+
+  <!-- Required Scripts At Bottom -->
+  <script src="{% static "js/common.js" %}"></script>
+  <script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio').checkbox();
+  </script>
+
+  {% block js-files %}
+    <!-- Additional Scripts -->
+  {% endblock %}
+</body>
+
+</html>

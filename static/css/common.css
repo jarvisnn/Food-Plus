@@ -1,0 +1,44 @@
+body {
+    /*background: url("/static/images/indexpage_1.jpg") no-repeat center center fixed;*/
+    /*-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+    padding-top: 74px;
+}
+
+/* Nav bar */
+.nav-bar {
+	padding-top: 7px;
+	padding-bottom: 4px;
+}
+.nav-img {
+	margin-top: 10px;
+	height: 38px;
+}
+.nav-button {
+	margin-left: 10px !important;
+}
+
+/* pusheen the cat*/
+#the-cat-box {
+  position: fixed;
+  height:73px;
+  width: 180px;
+  top:0px;
+  left: 250px;
+  overflow: hidden;
+}
+
+#the-cat {
+  width: 180px;
+  margin-top: 5px;
+}
+
+#the-message {
+  max-width: 380px;
+  position: fixed;
+  top: 4px;
+  left: 435px;
+  display: none;
+}

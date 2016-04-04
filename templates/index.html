@@ -1,0 +1,86 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jarvis">
+
+  <title>Food Plus</title>
+  <link rel="icon" type="image/png" href="/static/images/logo_pink.png"/>
+
+  <!--  Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+
+  <!-- Semantic Core CSS+JS -->
+  <link rel="stylesheet" href="{% static "css/semantic.min.css" %}"/>
+  <script src="{% static "js/jquery2.2.2.min.js" %}"></script>
+  <script src="{% static "js/semantic.min.js" %}"></script>
+  <script src="{% static "js/typed.min.js" %}"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static "css/index.css" %}"/>
+</head>
+
+<body>
+  <div id="full-page">
+  <div id="wrapper" class="ui inverted center aligned segment">
+
+    <div id="foodplus-header" class="ui container">
+      <div class="ui secondary menu">
+        <img id="header-img" src="/static/images/logo2.png">
+
+        <div class="right item">
+          <a href="/new"><button class="ui inverted basic button index-button">New Dish</button> </a>
+          <a href="/about"><button class="ui inverted basic button index-button">About Us</button> </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="foodplus-center" class="ui text container">
+      <div class="header-big" id="header-big"> Are you HUNGRY? </div>
+      <div class="header-small" id="header-small"></div>
+
+      <div class="header-go"><a href="/preferences"><button id="go-button" class="huge ui inverted button">Let's GO</button></a></div>
+    </div>
+
+  </div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    $("#header-small").typed({
+      strings: ["How is your taste today?", "Want to find something to eat?"],
+      typeSpeed: 5,
+    });
+
+    setTimeout(function(){ $(".header-go").transition('tada'); }, 4200);
+  });
+
+  var imageID=Math.floor((Math.random() * 4));
+  var images = ['/static/images/indexpage_1.jpg', '/static/images/indexpage_2.jpg', '/static/images/indexpage_3.jpg', '/static/images/indexpage_4.jpg'];
+  function changeimage(every_seconds){
+      imageID = (imageID + 1) % 4;
+      // document.body.style.background = "url('"+images[3]+"') no-repeat center center fixed";
+      window.setTimeout(function(){
+        $('#full-page').css({
+          background : "url('"+images[imageID]+"') no-repeat center center fixed",
+          "-webkit-background-size": "cover",
+          "-moz-background-size": "cover",
+          "-o-background-size": "cover",
+          "background-size": "cover"});
+      }, 100);
+      //call same function again for x of seconds
+      setTimeout("changeimage("+every_seconds+")",((every_seconds)*1000));
+  }
+
+  $(document).ready(function() {
+    changeimage(10);
+  });
+</script>
+
+</html>

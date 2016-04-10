@@ -2,7 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
-from core.models import Dish, Review
+from core.models import Dish, Review, Suggestion
 from PIL import Image, ImageOps
 import datetime
 import os.path
@@ -61,16 +61,24 @@ def newPreference(request):
     print(result)
     response = []
     if result != None:
-        for val in result.split(' '):
-            if "-" in val:
-                val2 = val.split('-')
+        for val in result.split('---'):
+            if "," in val:
+                val2 = val.split(',')
                 dish = Dish.objects.get(id=int(val2[0]))
                 response.append({"id": dish.id, "name": dish.name, "images": dish.images, "description": dish.description,
-                    "vegetarian": dish.isVegetarian,
-                    "spicyLevel": dish.spicyLevel, "sourLevel": dish.sourLevel, "sweetLevel": dish.sweetLevel, "saltyLevel": dish.saltyLevel,
-                    "fatLevel": dish.fatLevel, "calorieLevel": dish.calorieLevel, "fiberLevel": dish.fiberLevel,
-                    "stars": float(val2[1])})
+                    "cuisine": val2[1], "vegetarian": val2[2], "hasSoup": val2[3],
+                    "calorieLevel": val2[4], "fiberLevel": val2[5], "fatLevel": val2[6], "carbLevel": val2[7],
+                    "spicyLevel": val2[8], "saltyLevel": val2[9], "sourLevel": val2[10], "sweetLevel": val2[11],
+                    "stars": float(val2[12])})
     return JsonResponse(response, safe=False)
+
+
+# A new preferences. Assume Data is CORRECT!
+@csrf_exempt
+def modify(request):
+    insertSuggestionIntoDatabase(request.POST)
+    insertSuggestionsIntoClips()
+    return HttpResponse('')
 
 
 # ------------------------------------------------------------------------------
@@ -86,13 +94,15 @@ def insertNewDish(data):
                 images=imageNum,
                 cuisine=data['cuisine'],
                 isVegetarian=data['isVegetarian'],
+                hasSoup=data['hasSoup'],
                 spicyLevel=data['spicyLevel'],
                 sweetLevel=data['sweetLevel'],
                 sourLevel=data['sourLevel'],
                 saltyLevel=data['saltyLevel'],
                 fatLevel=data['fatLevel'],
                 calorieLevel=data['calorieLevel'],
-                fiberLevel=data['fiberLevel'])
+                fiberLevel=data['fiberLevel'],
+                carbLevel=data['carbLevel'])
     print(dish)
     dish.save()
 
@@ -138,14 +148,68 @@ def insertIntoClips(id, data):
                 '(name "'+data['name']+'") '
                 '(cuisine "'+data['cuisine']+'") '
                 '(is-vegetarian "'+data['isVegetarian']+'") '
+                '(has-soup "'+data['hasSoup']+'") '
                 '(fat-level "'+data['fatLevel']+'")'
                 '(calorie-level "'+data['calorieLevel']+'") '
                 '(fiber-level "'+data['fiberLevel']+'") '
+                '(carb-level "'+data['carbLevel']+'") '
                 '(spicy-level "'+data['spicyLevel']+'") '
                 '(sour-level "'+data['sourLevel']+'") '
                 '(sweet-level "'+data['sweetLevel']+'") '
                 '(salty-level "'+data['saltyLevel']+'") '
                 '(stars -1)))\n')
+
+    # new facts
+    open(FactsFile, 'w').writelines(lines)
+
+
+attributeMap = { 'isVegetarian': 'is-vegetarian',
+        'hasSoup': 'has-soup',
+        'spicyLevel': 'spicy-level',
+        'sourLevel': 'sour-level',
+        'saltyLevel': 'salty-level',
+        'sweetLevel': 'sweet-level',
+        'fatLevel': 'fat-level',
+        'calorieLevel': 'calorie-level',
+        'carbLevel': 'carb-level',
+        'fiberLevel': 'fiber-level'};
+def insertSuggestionIntoDatabase(data):
+    suggestion = Suggestion(
+                dishName=data['dishName'],
+                dishId=int(data['dishId']),
+                attribute=attributeMap[data['key']],
+                value=data['value'],
+                quantity=0)
+
+    suggestions = Suggestion.objects.filter(dishId=int(data['dishId']), attribute=attributeMap[data['key']], value=data['value'])
+    if (len(suggestions) != 0):
+        suggestion = suggestions[0]
+
+    suggestion.quantity = suggestion.quantity + 1
+    suggestion.save()
+    print(suggestion)
+
+
+def insertSuggestionsIntoClips():
+    # check if a fact-file exists
+    FactsFile = settings.CLIPS_DIR + "/suggestions.clp"
+    if not os.path.isfile(FactsFile):
+        file = open(FactsFile, 'w+')
+        file.write("(deffacts suggestions)\n")
+        file.close()
+
+    # modify facts
+    suggestions = Suggestion.objects.all()
+    lines = ['(deffacts suggestions\n']
+    for suggestion in suggestions:
+        lines.append('  (suggestion '
+                     '(dish-name "'+suggestion.dishName+'")'
+                     '(dish-id '+str(suggestion.dishId)+')'
+                     '(attribute "'+suggestion.attribute+'")'
+                     '(value "'+suggestion.value+'")'
+                     '(quantity '+str(suggestion.quantity)+'))\n')
+
+    lines.append(')\n')
 
     # new facts
     open(FactsFile, 'w').writelines(lines)
@@ -192,9 +256,11 @@ def clipsMatchPreference(data):
     preference = '(preference ' +\
                  '(cuisine "'+data['cuisine']+'") ' +\
                  '(is-vegetarian "'+data['isVegetarian']+'") ' +\
+                 '(has-soup "'+data['hasSoup']+'") ' +\
                  '(fat-level "'+data['fatLevel']+'")' +\
                  '(calorie-level "'+data['calorieLevel']+'") ' +\
                  '(fiber-level "'+data['fiberLevel']+'") ' +\
+                 '(carb-level "'+data['carbLevel']+'") ' +\
                  '(spicy-level "'+data['spicyLevel']+'") ' +\
                  '(sour-level "'+data['sourLevel']+'") ' +\
                  '(sweet-level "'+data['sweetLevel']+'") ' +\
@@ -207,6 +273,8 @@ def clipsMatchPreference(data):
         clips.BatchStar(settings.CLIPS_DIR + "/dishes.clp")
     if os.path.isfile(settings.CLIPS_DIR + "/reviews.clp"):
         clips.BatchStar(settings.CLIPS_DIR + "/reviews.clp")
+    if os.path.isfile(settings.CLIPS_DIR + "/suggestions.clp"):
+        clips.BatchStar(settings.CLIPS_DIR + "/suggestions.clp")
     clips.BatchStar(settings.CLIPS_DIR + "/rules.clp")
     clips.Reset()
     clips.Assert(preference)

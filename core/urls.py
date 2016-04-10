@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^api/reviews$', views.processReviews, name='processReviews'),
     url(r'^api/dishes$', views.createDish, name='createDish'),
     url(r'^api/preferences$', views.newPreference, name='newPreference'),
+    url(r'^api/modifications$', views.modify, name='modify'),
 ]

@@ -19,6 +19,7 @@ class Migration(migrations.Migration):
                 ('images', models.IntegerField()),
                 ('cuisine', models.CharField(max_length=50)),
                 ('isVegetarian', models.CharField(max_length=50)),
+                ('hasSoup', models.CharField(max_length=50)),
                 ('spicyLevel', models.CharField(max_length=50)),
                 ('sourLevel', models.CharField(max_length=50)),
                 ('sweetLevel', models.CharField(max_length=50)),
@@ -26,6 +27,7 @@ class Migration(migrations.Migration):
                 ('fatLevel', models.CharField(max_length=50)),
                 ('calorieLevel', models.CharField(max_length=50)),
                 ('fiberLevel', models.CharField(max_length=50)),
+                ('carbLevel', models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
@@ -38,6 +40,17 @@ class Migration(migrations.Migration):
                 ('reviewer', models.CharField(max_length=50)),
                 ('stars', models.IntegerField()),
                 ('createdTime', models.DateField(auto_now=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Suggestion',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('dishName', models.CharField(max_length=50)),
+                ('dishId', models.IntegerField()),
+                ('attribute', models.CharField(max_length=50)),
+                ('value', models.CharField(max_length=50)),
+                ('quantity', models.IntegerField()),
             ],
         ),
     ]

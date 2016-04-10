@@ -3,19 +3,28 @@ html, body {
 	margin: 0;
 }
 
-body {
-}
-
 #full-page {
 	width: 100%;
 	height: 100%;
+	position: fixed;
+	top:0;
+}
+#full-page img {
+	min-width: 100%;
+	min-height: 100%;
+	position:fixed;
+	z-index:1
+}
+#full-page img.active{
+	z-index:3
 }
 
 #wrapper {
-  min-width: 100%;
-	min-height: 100%;
+	width: 100%;
+	height: 100%;
   background-color: rgba(0,0,0,0.4);
   position:fixed;
+	margin-top: 0px !important;
 }
 
 #foodplus-header {

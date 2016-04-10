@@ -180,9 +180,11 @@ function submitForm() {
     sourLevel:    $('#form-new-dish').find('input[name="sour-level"]:checked').val(),
     saltyLevel:   $('#form-new-dish').find('input[name="salty-level"]:checked').val(),
     fatLevel:     $('#form-new-dish').find('input[name="fat-level"]:checked').val(),
+    carbLevel:    $('#form-new-dish').find('input[name="carb-level"]:checked').val(),
     calorieLevel: $('#form-new-dish').find('input[name="calorie-level"]:checked').val(),
     fiberLevel:   $('#form-new-dish').find('input[name="fiber-level"]:checked').val(),
     isVegetarian: $('#form-new-dish').find('input[name="is-vegetarian"]:checked').val(),
+    hasSoup:      $('#form-new-dish').find('input[name="has-soup"]:checked').val(),
     description:  $('#description').val(),
     images:       JSON.stringify(allFiles),
   };

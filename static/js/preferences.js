@@ -1,7 +1,22 @@
+// --------------------------------Variables + Constants---------------------------------------------
 // current dishes results
 var currentData;
 var currentDish;
 var currentTab;
+var values = {'hasSoup': ['soup', 'dry food'],
+              'isVegetarian': ['vegetarian', '<del>vegetarian</del>'],
+              'sweetLevel': ['no sweet', 'a bit sweet', 'sweet', 'super sweet'],
+              'spicyLevel': ['no spicy', 'a bit spicy', 'spicy', 'super spicy'],
+              'sourLevel': ['no sour', 'a bit sour', 'sour', 'super sour'],
+              'saltyLevel': ['no salty', 'a bit salty', 'salty', 'super salty'],
+              'fatLevel': ['low fat', 'normal fat', 'high fat'],
+              'calorieLevel': ['low calorie', 'normal calorie', 'high calorie'],
+              'fiberLevel': ['low fiber', 'normal fiber', 'high fiber'],
+              'carbLevel': ['low carb', 'normal carb', 'high carb']};
+var changableData = ['isVegetarian', 'hasSoup', 'spicyLevel', 'sourLevel', 'saltyLevel', 'sweetLevel', 'fatLevel', 'calorieLevel', 'fiberLevel', 'carbLevel'];
+var cardColors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
+var numColors = cardColors.length;
+
 
 
 // Preference button clicked
@@ -43,6 +58,8 @@ function resetTab(index) {
 }
 
 
+//----------------------------------- PREFERENCE FORM HANDLER-------------------------------------------
+
 // Preference Form Validation
 $("#form-preference").form({
   cuisine: {
@@ -78,6 +95,8 @@ function submitForm() {
     fatLevel:     filter($('#form-preference').find('input[name="fat-level"]:checked').val()),
     calorieLevel: filter($('#form-preference').find('input[name="calorie-level"]:checked').val()),
     fiberLevel:   filter($('#form-preference').find('input[name="fiber-level"]:checked').val()),
+    carbLevel:    filter($('#form-preference').find('input[name="carb-level"]:checked').val()),
+    hasSoup:      filter($('#form-preference').find('input[name="has-soup"]:checked').val()),
     isVegetarian: filter($('#form-preference').find('input[name="is-vegetarian"]:checked').val()),
   };
 
@@ -85,19 +104,21 @@ function submitForm() {
   $.ajax({ type: 'POST', url: '/api/preferences', data: formData,
     success: function(data) {
       $('#form-preference').removeClass("loading");
-      $('#outer-box').transition('slide down');
-      renderCards(data);
+      if (data.length == 0) {
+        saySomething(true, 'Sorry I cannot find any dish matching your preference :(');
+      } else {
+        $('#outer-box').transition('slide down');
+        renderCards(data);
+      }
     },
     error: function() {
-
+      saySomething(true, "Sorry some unexpected errors occured :()")
   }});
 }
 
 
+// ------------------------- CARDS --------------------------------------------
 //Rendering cards
-var cardColors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
-var numColors = cardColors.length;
-
 function renderCards(data) {
   currentData = data;
   var content = "";
@@ -141,24 +162,17 @@ function clickCard(id) {
   // Tags
   var index = 0;
   var tags = "";
-  if (currentData[id].vegetarian == 'TRUE') {
-    tags += `<a class="ui `+cardColors[index]+` basic label">vegetarian</a>`;
+  tags += `<a class="food-tag ui `+cardColors[index]+` basic label">`+currentData[id].cuisine+`</a>`;
+  index = (index + 1) % numColors;
+
+  var text = (currentData[id].vegetarian == 'TRUE') ? "vegetarian" : "<del>vegetarian</del>"
+  tags += `<a class="food-tag ui `+cardColors[index]+` basic label" onclick="showSuggestions(this,'`+cardColors[index]+`','`+changableData[0]+`')">`+text+`</a>`;
+  index = (index + 1) % numColors;
+
+  for (i = 1; i < changableData.length; i++) {
+    tags += `<a class="food-tag ui `+cardColors[index]+` basic label" onclick="showSuggestions(this,'`+cardColors[index]+`','`+changableData[i]+`')">`+currentData[id][changableData[i]]+`</a>`;
     index = (index + 1) % numColors;
   }
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].spicyLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].sourLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].saltyLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].sweetLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].fatLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].calorieLevel+`</a>`;
-  index = (index + 1) % numColors;
-  tags += `<a class="ui `+cardColors[index]+` basic label">`+currentData[id].fiberLevel+`</a>`;
-  index = (index + 1) % numColors;
   $("#detail-tags").html(tags);
 
   // Stars
@@ -208,12 +222,15 @@ function clickCard(id) {
   }
 
   // Comments
+  $("#comments").html("");
+  $("#comments").addClass("loading");
   $.ajax({ type: 'GET', url: '/api/reviews', data: {"dishId": currentData[id].id},
     success: function(data) {
+      $("#comments").removeClass("loading");
       showComments(data);
     },
     error: function() {
-
+      saySomething(true, "Sorry some unexpected errors occured :()")
   }});
   // Show
   $("#modal-card-detail").modal('show');
@@ -247,8 +264,7 @@ function showComments(data) {
 }
 
 
-//------------------------------------------------------------------------------
-// REVIEWSSSSS
+//---------------------------------REVIEWSSSSS----------------------------------
 
 // Show the new review form
 $("#review-new-button").click(function() {
@@ -350,6 +366,67 @@ function submitReview() {
   }});
 }
 
+
+// ------------------------------------Suggestions------------------------------
+// User's Suggestions
+var countdown;
+function showSuggestions(e, color, key) {
+  var content = `
+  <div id="suggestion">`
+  for (i = 0; i < values[key].length; i++)
+    content += `<button class="mini ui `+color+` basic button"
+                onclick="newSuggestion('`+key+`','`+values[key][i]+`')">`+values[key][i]+`</button>`;
+  content += `</div>`;
+  $('#suggestion-box').html(content);
+
+  var box = $('#suggestion')
+  box.css({top: $(e).position().top + 36, left: $(e).position().left});
+  box.transition('swing down');
+
+  countdown = setTimeout(function() {
+    if (box.is(':visible')) {box.transition('fade');}
+  }, 1500);
+  box.mouseenter(function() {
+    clearTimeout(countdown);
+    countdown = undefined;
+  });
+  box.mouseleave(function() {
+    if (countdown == undefined) {
+      countdown = setTimeout(function() {
+        if (box.is(':visible')) {box.transition('fade');}
+    }, 1500);
+    }
+  });
+}
+
+function newSuggestion(key, value) {
+  value = (value == 'vegetarian') ? 'TRUE' : 'FALSE';
+
+  clearTimeout(countdown);
+  $('#suggestion').transition('vertical flip');
+
+  $("#modal-message").transition({
+    animation: 'vertical flip',
+    onComplete: function() {
+      thanksCountDown = setTimeout(function() {
+        $("#modal-message").transition('vertical flip');
+      }, 500);
+    }
+  });
+
+  // Send to server
+  // Ajax post
+  $.ajax({ type: 'POST', url: '/api/modifications', data: {
+      key: key,
+      value: value,
+      dishName:         currentData[currentDish].name,
+      dishId:           currentData[currentDish].id,
+    },
+    success: function(data) {
+    },
+    error: function() {
+    }});
+}
 
 
 // Utilities

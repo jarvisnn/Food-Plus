@@ -34,20 +34,21 @@ var isTalking = false;
 
 function saySomething(standup, message) {
   if (isTalking) {
+    $("#the-message").text(message);
     return;
   }
   isTalking = true;
   $("#the-message").text(message);
   if (standup) {
     $('#the-cat').animate({ 'margin-top' : "-20px"});
-    setTimeout(function(){ $("#the-message").transition('swing down'); }, 500);
-    setTimeout(function(){ $("#the-message").transition('swing down'); }, 4000);
-    setTimeout(function(){ $('#the-cat').animate({ 'margin-top' : "5px"}); }, 4700);
-    setTimeout(function(){isTalking = false;}, 4800);
+    setTimeout(function(){ $("#the-message").transition('swing down'); }, 400);
+    setTimeout(function(){ $("#the-message").transition('swing down'); }, 3400);
+    setTimeout(function(){ $('#the-cat').animate({ 'margin-top' : "5px"}); }, 3800);
+    setTimeout(function(){isTalking = false;}, 3900);
   } else {
     $("#the-message").transition('swing down');
-    setTimeout(function(){ $("#the-message").transition('swing down'); }, 4000);
-    setTimeout(function(){isTalking = false;}, 4100);
+    setTimeout(function(){ $("#the-message").transition('swing down'); }, 3000);
+    setTimeout(function(){isTalking = false;}, 3100);
   }
 }
 

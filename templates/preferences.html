@@ -19,6 +19,7 @@
       <label class="four wide field">Choose The Cuisine</label>
       <select class="ui search dropdown" name="cuisine">
         <option value="">Select Cuisine</option>
+        <option value="?">Anything</option>
         <option value="chinese">Chinese Cuisine</option>
         <option value="indian">Indian Cuisine</option>
         <option value="japanese">Japanese Cuisine</option>
@@ -27,7 +28,6 @@
         <option value="malay">Malaysian Cuisine</option>
         <option value="vietnamese">Vietnamese Cuisine</option>
         <option value="western">Western Cuisine</option>
-        <option value="?">Anything</option>
       </select>
     </div>
 
@@ -44,6 +44,23 @@
         <div class="ui radio checkbox">
           <input type="radio" name="is-vegetarian" tabindex="0" value="FALSE" class="hidden">
           <label>No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- has-soup -->
+    <div class="inline fields">
+      <label class="four wide field">Do you want soup or dry food?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="has-soup" tabindex="0" value="soup" class="hidden">
+          <label>Soup</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="has-soup" tabindex="0" value="dry food" class="hidden">
+          <label>Dry Food</label>
         </div>
       </div>
     </div>
@@ -210,6 +227,29 @@
       </div>
     </div>
 
+    <!-- Carb -->
+    <div class="inline fields">
+      <label class="four wide field">Any notice about the carb?</label>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="carb-level" tabindex="0" value="low carb" class="hidden">
+          <label>Low Carb</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="carb-level" tabindex="0" value="normal carb" class="hidden">
+          <label>Normal</label>
+        </div>
+      </div>
+      <div class="three wide field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="carb-level" tabindex="0" value="high carb" class="hidden">
+          <label>High Carb</label>
+        </div>
+      </div>
+    </div>
+
     <!-- Calorie -->
     <div class="inline fields">
       <label class="four wide field">Any notice about the calorie?</label>
@@ -255,6 +295,13 @@
 
 <!-- MODAL -->
 <div id="modal-card-detail" class="ui large modal">
+  <!-- Thanks message -->
+  <div id="modal-message" class="ui green message">Thank you :)</div>
+
+  <!-- Suggestions -->
+  <span id="suggestion-box">
+  </span>
+
   <i class="close icon"></i>
 
   <!-- Header -->

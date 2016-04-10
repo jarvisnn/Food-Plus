@@ -27,6 +27,12 @@
 
 <body>
   <div id="full-page">
+    <img class="active" src="/static/images/indexpage_2.jpg"/>
+    <img src="/static/images/indexpage_1.jpg"/>
+    <img src="/static/images/indexpage_3.jpg"/>
+    <img src="/static/images/indexpage_4.jpg"/>
+  </div>
+
   <div id="wrapper" class="ui inverted center aligned segment">
 
     <div id="foodplus-header" class="ui container">
@@ -48,39 +54,38 @@
     </div>
 
   </div>
-  </div>
 </body>
 
 <script>
-  $(function(){
+  function animateText() {
     $("#header-small").typed({
       strings: ["How is your taste today?", "Want to find something to eat?"],
       typeSpeed: 5,
+      callback: function() {
+        $(".header-go").transition('tada');
+      }
     });
+  };
 
-    setTimeout(function(){ $(".header-go").transition('tada'); }, 4200);
-  });
-
-  var imageID=Math.floor((Math.random() * 4));
-  var images = ['/static/images/indexpage_1.jpg', '/static/images/indexpage_2.jpg', '/static/images/indexpage_3.jpg', '/static/images/indexpage_4.jpg'];
-  function changeimage(every_seconds){
-      imageID = (imageID + 1) % 4;
-      // document.body.style.background = "url('"+images[3]+"') no-repeat center center fixed";
-      window.setTimeout(function(){
-        $('#full-page').css({
-          background : "url('"+images[imageID]+"') no-repeat center center fixed",
-          "-webkit-background-size": "cover",
-          "-moz-background-size": "cover",
-          "-o-background-size": "cover",
-          "background-size": "cover"});
-      }, 100);
-      //call same function again for x of seconds
-      setTimeout("changeimage("+every_seconds+")",((every_seconds)*1000));
+  function tadaButton() {
+    setTimeout( function() {$(".header-go").transition('tada')} , 1000);
   }
 
-  $(document).ready(function() {
-    changeimage(10);
-  });
+  function cycleImages(){
+    var $active = $('#full-page .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#full-page img:first');
+    $next.css('z-index',2);//move the next image up the pile
+    $active.fadeOut(1500,function(){//fade out the top image
+      $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+      $next.css('z-index',3).addClass('active');//make the next image the top one
+    });
+  }
+
+  $(document).ready(function(){
+    animateText();
+    setInterval('cycleImages()', 8000);
+    setInterval('tadaButton()', 8000);
+  })
 </script>
 
 </html>

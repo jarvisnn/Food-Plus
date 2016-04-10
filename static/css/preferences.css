@@ -28,7 +28,16 @@
 #detail-rating {
   margin-bottom:1px !important;
 }
-
+#modal-message {
+  position: fixed;
+  z-index: 1000000;
+  width: 20%;
+  top: 10px;
+  left: 50%;
+  margin-left: -10%;
+  text-align: center;
+  display: none;
+}
 
 /* Reviews */
 .review-star {
@@ -54,4 +63,28 @@
 
 #left-arr {
   left: 0px;
+}
+
+/* Tags */
+.food-tag {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  margin-left: 0px !important;
+  margin-right: 1px !important;
+}
+
+
+/* Suggestions*/
+#suggestion {
+  position: fixed;
+  z-index: 1000000;
+  padding: 5px;
+  background-color: white;
+  border: 1px solid #d4d4d5;
+  border-radius: 5px;
+  box-shadow: 7px 7px 3px #888888;
+  display: none;
+}
+#suggestion .button {
+  margin: 2px !important;
 }

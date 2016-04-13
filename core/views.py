@@ -103,7 +103,6 @@ def insertNewDish(data):
                 calorieLevel=data['calorieLevel'],
                 fiberLevel=data['fiberLevel'],
                 carbLevel=data['carbLevel'])
-    print(dish)
     dish.save()
 
     index = 0

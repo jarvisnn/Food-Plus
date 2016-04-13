@@ -25,7 +25,7 @@
 
 
 ; ; Rules for calculating dish rating from reviews
-(defrule dishs-rating
+(defrule dishes-rating
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (stars ?s&:(= ?s -1)))
 =>

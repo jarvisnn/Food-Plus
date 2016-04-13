@@ -400,7 +400,9 @@ function showSuggestions(e, color, key) {
 }
 
 function newSuggestion(key, value) {
-  value = (value == 'vegetarian') ? 'TRUE' : 'FALSE';
+  if (key == 'isVegetarian') {
+    value = (value == 'vegetarian') ? 'TRUE' : 'FALSE';
+  }
 
   clearTimeout(countdown);
   $('#suggestion').transition('vertical flip');

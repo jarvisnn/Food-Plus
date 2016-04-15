@@ -1,4 +1,6 @@
 ; ; Rules for matching dishes with given preference
+; ; Salience set to 1 so this rule will be fired at the end.
+; ; (Other rules have salience = 2)
 (defrule dishes-matching
 	(declare (salience 1))
 	(dish (ID ?ID) (name ?name) (cuisine ?cuisine) (is-vegetarian ?vegetarian) (has-soup ?soup)
@@ -25,6 +27,7 @@
 
 
 ; ; Rules for calculating dish rating from reviews
+; ; Star will be != -1 after this rule.
 (defrule dishs-rating
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (stars ?s&:(= ?s -1)))
@@ -56,6 +59,7 @@
 	(modify ?d (has-soup ?value))
 )
 
+; ; Rule of tuning "is-vegetarian"
 (defrule tuning-is-vegetarian
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (is-vegetarian ?origin))
@@ -67,6 +71,7 @@
 	(modify ?d (is-vegetarian ?value))
 )
 
+; ; Rule of tuning "spicy-level"
 (defrule tuning-spicy-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (spicy-level ?origin))
@@ -77,6 +82,7 @@
 	(modify ?d (spicy-level ?value))
 )
 
+; ; Rule of tuning "sour-level"
 (defrule tuning-sour-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (sour-level ?origin))
@@ -87,6 +93,7 @@
 	(modify ?d (sour-level ?value))
 )
 
+; ; Rule of tuning "sweet-level"
 (defrule tuning-sweet-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (sweet-level ?origin))
@@ -97,6 +104,7 @@
 	(modify ?d (sweet-level ?value))
 )
 
+; ; Rule of tuning "salty-level"
 (defrule tuning-salty-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (salty-level ?origin))
@@ -107,6 +115,7 @@
 	(modify ?d (salty-level ?value))
 )
 
+; ; Rule of tuning "fat-level"
 (defrule tuning-fat-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (fat-level ?origin))
@@ -117,6 +126,7 @@
 	(modify ?d (fat-level ?value))
 )
 
+; ; Rule of tuning "calorie-level"
 (defrule tuning-calorie-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (calorie-level ?origin))
@@ -127,6 +137,7 @@
 	(modify ?d (calorie-level ?value))
 )
 
+; ; Rule of tuning "fiber-level"
 (defrule tuning-fiber-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (fiber-level ?origin))
@@ -137,6 +148,7 @@
 	(modify ?d (fiber-level ?value))
 )
 
+; ; Rule of tuning "carb-level"
 (defrule tuning-carb-level
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (carb-level ?origin))

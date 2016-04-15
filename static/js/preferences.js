@@ -362,7 +362,7 @@ function submitReview() {
       $("#comments").html(text);
     },
     error: function() {
-
+      saySomething(true, "Ops, something happened!")
   }});
 }
 
@@ -434,4 +434,101 @@ function newSuggestion(key, value) {
 // Utilities
 function filter(text) {
   return (text == undefined) ? "?" : text;
+}
+
+
+
+// ------------------------ SCRET FLAVOR --------------------------------------
+var fakeData = [{"comment": "Best dish ever", "stars": "5"},
+                {"comment": "Not a bad choice", "stars": "4"},
+                {"comment": "I really like this dish", "stars": "4"},
+                {"comment": "I love this dish", "stars": "5"},
+                {"comment": "The taste is ok but I do not like the smell", "stars": "3"},
+                {"comment": "Smelly ..", "stars": "2"},
+                {"comment": "Very freshy", "stars": "5"},
+                {"comment": "Best dish for hungry ones :))", "stars": "5"},
+                {"comment": "I cannot finish the dish", "stars": "1"},
+                {"comment": "Nice taste", "stars": "4"},
+                {"comment": "Smell good!", "stars": "4"},
+                {"comment": "So so", "stars": "3"},
+                {"comment": "Good tast good smell", "stars": "5"},
+                {"comment": "Fulling my stomach well", "stars": "4"},
+                {"comment": "I will definately try this dish again", "stars": "5"},
+                {"comment": "Nice dish", "stars": "4"},
+                {"comment": "I love the taste", "stars": "5"},
+                {"comment": "I want to learn how to make this dish", "stars": "5"},
+                {"comment": "Good! May try again", "stars": "4"},
+                {"comment": "Thumb up!", "stars": "5"},
+                {"comment": "Thumb down!", "stars": "1"}
+              ];
+var fakeNames = ["Jack", "Jill", "Jarvis", "Tony", "Trung", "Trang", "Mint", "Cindy", "Thanh",
+                 "Stark", "Captain America", "Captain Singapore", "Hulk", "Thor", "Doraemon",
+                 "Nobita", "Shizuka", "Jaian", "Mr.Pusheen", "Koko", "Jonathan", "Gennady", "Nathan",
+                 "Grey", "Maria", "Songoku", "Naruto", "Luffy", "Zoro", "Nami", "Robin", "Chopper", "Franky",
+                 "Ussop", "Yasoop", "Gol .D Roger"]
+
+// Create random review
+function createRandomReview(num) {
+  var x = 1;
+
+  var intervalId = setInterval(function() {
+    if (++ x >= num) {
+       window.clearInterval(intervalId);
+    }
+    console.log(x);
+    // preparing data
+    dishId = Math.floor((Math.random() * currentData.length));
+    name = fakeNames[Math.floor((Math.random() * fakeNames.length))]
+    data = fakeData[Math.floor((Math.random() * fakeData.length))]
+    var formData = {
+      reviewer:         name,
+      comment:          data["comment"],
+      stars:            data["stars"],
+      dishName:         currentData[dishId].name,
+      dishId:           currentData[dishId].id,
+    };
+
+    // Ajax post
+    $.ajax({ type: 'POST', url: '/api/reviews', data: formData,
+      success: function(data) {
+        console.log(data);
+      },
+      error: function() {
+        console.log("error")
+    }});
+  }, 300);
+
+}
+
+function createRandomSuggestions(num) {
+  var x = 1;
+
+  var intervalId2 = setInterval(function() {
+    if (++ x >= num) {
+       window.clearInterval(intervalId2);
+    }
+    console.log(x);
+    // preparing data
+    dishId = Math.floor((Math.random() * currentData.length));
+    key = changableData[Math.floor((Math.random() * changableData.length))];
+    if (key != "isVegetarian") {
+      pro = Math.floor((Math.random() * 7));
+      value = currentData[dishId][key];
+      if (pro == 0) {
+        value = values[key][Math.floor((Math.random() * (values[key].length)))];
+      }
+
+      // Ajax post
+      $.ajax({ type: 'POST', url: '/api/modifications', data: {
+          key: key,
+          value: value,
+          dishName:         currentData[dishId].name,
+          dishId:           currentData[dishId].id,
+        },
+        success: function(data) {
+        },
+        error: function() {
+        }});
+    }
+  }, 300);
 }

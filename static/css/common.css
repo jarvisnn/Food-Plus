@@ -1,9 +1,4 @@
 body {
-    /*background: url("/static/images/indexpage_1.jpg") no-repeat center center fixed;*/
-    /*-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;*/
     padding-top: 74px;
 }
 
@@ -21,12 +16,15 @@ body {
 }
 
 /* pusheen the cat*/
+#notification-box {
+  position: absolute;
+  top:0px;
+}
 #the-cat-box {
-  position: fixed;
+  float: left;
   height:73px;
   width: 180px;
   top:0px;
-  left: 250px;
   overflow: hidden;
 }
 
@@ -36,9 +34,7 @@ body {
 }
 
 #the-message {
-  max-width: 380px;
-  position: fixed;
+  float: left;
   top: 4px;
-  left: 435px;
   display: none;
 }

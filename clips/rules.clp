@@ -25,7 +25,7 @@
 
 
 ; ; Rules for calculating dish rating from reviews
-(defrule dishes-rating
+(defrule dishs-rating
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (stars ?s&:(= ?s -1)))
 =>
@@ -50,7 +50,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (has-soup ?origin))
 	(suggestion (dish-id ?id) (attribute "has-soup") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "has-soup") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "has-soup") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (has-soup ?value))
 )
@@ -59,7 +60,9 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (is-vegetarian ?origin))
 	(suggestion (dish-id ?id) (attribute "is-vegetarian") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "is-vegetarian") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "is-vegetarian") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
+
 =>
 	(modify ?d (is-vegetarian ?value))
 )
@@ -68,7 +71,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (spicy-level ?origin))
 	(suggestion (dish-id ?id) (attribute "spicy-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "spicy-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "spicy-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (spicy-level ?value))
 )
@@ -77,7 +81,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (sour-level ?origin))
 	(suggestion (dish-id ?id) (attribute "sour-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "sour-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "sour-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (sour-level ?value))
 )
@@ -86,7 +91,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (sweet-level ?origin))
 	(suggestion (dish-id ?id) (attribute "sweet-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "sweet-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "sweet-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (sweet-level ?value))
 )
@@ -95,7 +101,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (salty-level ?origin))
 	(suggestion (dish-id ?id) (attribute "salty-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "salty-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "salty-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (salty-level ?value))
 )
@@ -104,7 +111,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (fat-level ?origin))
 	(suggestion (dish-id ?id) (attribute "fat-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "fat-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "fat-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (fat-level ?value))
 )
@@ -113,7 +121,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (calorie-level ?origin))
 	(suggestion (dish-id ?id) (attribute "calorie-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "calorie-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "calorie-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (calorie-level ?value))
 )
@@ -122,7 +131,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (fiber-level ?origin))
 	(suggestion (dish-id ?id) (attribute "fiber-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "fiber-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "fiber-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (fiber-level ?value))
 )
@@ -131,7 +141,8 @@
 	(declare (salience 2))
 	?d <- (dish (ID ?id) (carb-level ?origin))
 	(suggestion (dish-id ?id) (attribute "carb-level") (value ?value&:(neq ?value ?origin)) (quantity ?quantity))
-	(not (suggestion (dish-id ?id) (attribute "carb-level") (quantity ?quantity2&:(> ?quantity2 ?quantity))))
+	(not (suggestion (dish-id ?id) (attribute "carb-level") (value ?value2) 
+		(quantity ?quantity2&:(or (> ?quantity2 ?quantity)(and (= ?quantity2 ?quantity) (< (str-compare ?value2 ?value) 0))))))
 =>
 	(modify ?d (carb-level ?value))
 )

@@ -1,8 +1,2 @@
 .DS_Store
 *.pyc
-static/images/dishes/*
-db.sqlite3
-suggestions.clp
-preferences.clp
-dishes.clp
-clips/dishes.clp

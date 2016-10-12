@@ -23,3 +23,6 @@ pip install pyclips
 - Dishes: name, cuisine, is-vegetarian, is-low-cal, sweet-level, sour-level, spicy-level, salty-level, is-savory, stars
 - Reviews: dish-name, stars, comment
 - Preferences: cuisine, is-vegetarian, is-low-cal, sweet-level, sour-level, spicy-level, salty-level, is-savory
+
+## Demo Video
+[![ScreenShot](https://github.com/jarvis57/Food-Plus/blob/master/static/images/ScreenShot.png?raw=true)](https://www.youtube.com/watch?v=lUvDuu8eXvc)
